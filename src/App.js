@@ -28,7 +28,6 @@ class App extends Component {
   componentDidMount() {
     fetch(API)
       .then(response => {
-        console.log(response);
         if (response.ok) {
           return response.json();
         } else {
@@ -69,7 +68,7 @@ class App extends Component {
 
                             <div className="navbar-end">
                                 {this.state.tabs && this.state.tabs.map(tab => {
-                                    return <Link to={'/' + tab.id}>
+                                    return <Link key={tab.id} to={'/' + tab.id}>
                                         <span className="navbar-item">{tab.title}</span>
                                     </Link>;
                                 })}
@@ -82,7 +81,7 @@ class App extends Component {
 
                             {this.state.tabs && this.state.tabs.map(tab => {
                                 const Component = asyncComponent(() => import('./' + tab.path).then(module => module.default))
-                                return <Route path={'/' + tab.id} component={Component} />;
+                                return <Route key={tab.id} path={'/' + tab.id} component={Component} />;
                             })}
                             
                             <Route component={NotFound} />
