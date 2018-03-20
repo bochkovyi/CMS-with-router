@@ -5,7 +5,7 @@ import {
   BrowserRouter, Route, Switch, Link
 } from 'react-router-dom'
 
-import asyncComponent from './AsyncComponent'
+import { asyncComponent } from 'react-async-component';
 import NotFound from './NotFound/NotFound';
 
 const API = '/tabs.json';
@@ -49,11 +49,15 @@ class App extends Component {
       return <Loading />;
     }
     
-    let HomeComponent = false;
+    let lazyComponents = tabs.map(
+        tab => {
+            return {
+                tab: tab,
+                component: asyncComponent({ resolve: () => import(`./${tab.path}`) })
+            }
+        });
 
-    if ( tabs && tabs[0] ) {
-        HomeComponent = asyncComponent(() => import('./' + tabs[0].path).then(module => module.default));
-    }
+    const DefaultComponent = lazyComponents.length > 0 ? lazyComponents[0].component : Loading;
 
     return (
         <BrowserRouter>
@@ -77,12 +81,11 @@ class App extends Component {
                     </header>
                     <section className="content">
                         <Switch>
-                            <Route exact path="/" component={HomeComponent || Loading} />
+                            <Route exact path="/" component={DefaultComponent} />
 
-                            {this.state.tabs && this.state.tabs.map(tab => {
-                                const Component = asyncComponent(() => import('./' + tab.path).then(module => module.default))
-                                return <Route key={tab.id} path={'/' + tab.id} component={Component} />;
-                            })}
+                            {lazyComponents.map(
+                                lazy => <Route key={lazy.tab.id} path={'/' + lazy.tab.id} component={lazy.component} />
+                            )}
                             
                             <Route component={NotFound} />
                         </Switch>
