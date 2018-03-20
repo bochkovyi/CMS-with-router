@@ -11,4 +11,4 @@ class NotFound extends Component {
     }
 }
 
-export { NotFound }
+export default NotFound;

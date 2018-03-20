@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 
 import {
-  Router,
+  BrowserRouter as Router,
   Route,
   Switch,
   Link
 } from 'react-router-dom'
 
-import createBrowserHistory from 'history/createBrowserHistory';
 import asyncComponent from './AsyncComponent'
-import { NotFound } from './NotFound/NotFound';
+import NotFound from './NotFound/NotFound';
 
 const Chart = asyncComponent(() =>
     import('./Chart/Chart').then(module => module.default)
@@ -26,8 +25,6 @@ const Table = asyncComponent(() =>
 
 const API = '/tabs.json';
 const SORTING_FUNCTION = (tabA, tabB) => tabA.order - tabB.order;
-
-const history = createBrowserHistory();
 
 class App extends Component {
 
@@ -66,10 +63,10 @@ class App extends Component {
     if (isLoading) {
       return <p>Loading ...</p>;
     }
-
+    // https://reacttraining.com/react-router/web/example/no-match
     return (
       <div>
-        <Router history={history}>
+        <Router>
                 <div>
                     <header className="header">
                         <nav className="navbar container">
@@ -98,7 +95,7 @@ class App extends Component {
                             <Route path="/table" component={Table} />
                             <Route path="/chart" component={Chart} />
                             <Route path="/list" component={List} />
-                            <Route path="*" component={NotFound} />
+                            <Route component={NotFound} />
                         </Switch>
                     </section>
                 </div>

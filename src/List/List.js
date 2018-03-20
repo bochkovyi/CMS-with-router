@@ -30,4 +30,4 @@
     }
 }
 
-export { List }
+export default List;

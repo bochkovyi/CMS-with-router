@@ -18,4 +18,4 @@ class Chart extends Component {
    }
 }
 
-export { Chart }
+export default Chart;
