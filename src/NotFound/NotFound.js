@@ -5,7 +5,7 @@ class NotFound extends Component {
         return (
             <div className="container">
                 <p>404</p>
-                <p>Page not found - </p>
+                <p>Page not found</p>
             </div>
         )
     }

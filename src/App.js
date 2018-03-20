@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import {
-  BrowserRouter, Route, Switch, Link
-} from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import Nav from './Nav/Nav';
 import { asyncComponent } from 'react-async-component';
 import NotFound from './NotFound/NotFound';
 
@@ -61,37 +60,21 @@ class App extends Component {
 
     return (
         <BrowserRouter>
-                <div>
-                    <header className="header">
-                        <nav className="navbar container">
-                            <div className="navbar-brand">
-                                <Link to="/">
-                                    <span className="navbar-item">Lazy Loading Routes</span>
-                                </Link>
-                            </div>
+            <div>
+                <Nav tabs={tabs}/>
+                <div className="container">
+                    <Switch>
+                        <Route exact path="/" component={DefaultComponent} />
 
-                            <div className="navbar-end">
-                                {this.state.tabs && this.state.tabs.map(tab => {
-                                    return <Link key={tab.id} to={'/' + tab.id}>
-                                        <span className="navbar-item">{tab.title}</span>
-                                    </Link>;
-                                })}
-                            </div>
-                        </nav>
-                    </header>
-                    <section className="content">
-                        <Switch>
-                            <Route exact path="/" component={DefaultComponent} />
-
-                            {lazyComponents.map(
-                                lazy => <Route key={lazy.tab.id} path={'/' + lazy.tab.id} component={lazy.component} />
-                            )}
-                            
-                            <Route component={NotFound} />
-                        </Switch>
-                    </section>
+                        {lazyComponents.map(
+                            lazy => <Route key={lazy.tab.id} path={'/' + lazy.tab.id} component={lazy.component} />
+                        )}
+                        
+                        <Route component={NotFound} />
+                    </Switch>
                 </div>
-            </BrowserRouter>
+            </div>
+        </BrowserRouter>
     );
   }
 }
