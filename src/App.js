@@ -2,29 +2,16 @@ import React, { Component } from 'react';
 import './App.css';
 
 import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Link
+  BrowserRouter, Route, Switch, Link
 } from 'react-router-dom'
 
 import asyncComponent from './AsyncComponent'
 import NotFound from './NotFound/NotFound';
 
-const Chart = asyncComponent(() =>
-    import('./Chart/Chart').then(module => module.default)
-)
-
-const List = asyncComponent(() =>
-    import('./List/List').then(module => module.default)
-)
-
-const Table = asyncComponent(() =>
-    import('./Table/Table').then(module => module.default)
-)
-
 const API = '/tabs.json';
 const SORTING_FUNCTION = (tabA, tabB) => tabA.order - tabB.order;
+
+const Loading = () => <p>Loading ...</p>;
 
 class App extends Component {
 
@@ -56,17 +43,21 @@ class App extends Component {
     const { tabs, isLoading, error } = this.state;
 
     if (error) {
-      console.log('Error is happened', error);
       return <p>{error.message}</p>;
     }
 
     if (isLoading) {
-      return <p>Loading ...</p>;
+      return <Loading />;
     }
-    // https://reacttraining.com/react-router/web/example/no-match
+    
+    let HomeComponent = false;
+
+    if ( tabs && tabs[0] ) {
+        HomeComponent = asyncComponent(() => import('./' + tabs[0].path).then(module => module.default));
+    }
+
     return (
-      <div>
-        <Router>
+        <BrowserRouter>
                 <div>
                     <header className="header">
                         <nav className="navbar container">
@@ -77,36 +68,28 @@ class App extends Component {
                             </div>
 
                             <div className="navbar-end">
-                                <Link to="/list">
-                                    <span className="navbar-item">List</span>
-                                </Link>
-                                <Link to="/chart">
-                                    <span className="navbar-item">Chart</span>
-                                </Link>
-                                <Link to="/table">
-                                    <span className="navbar-item">Table</span>
-                                </Link>
+                                {this.state.tabs && this.state.tabs.map(tab => {
+                                    return <Link to={'/' + tab.id}>
+                                        <span className="navbar-item">{tab.title}</span>
+                                    </Link>;
+                                })}
                             </div>
                         </nav>
                     </header>
                     <section className="content">
                         <Switch>
-                            <Route exact path="/" component={Table} />
-                            <Route path="/table" component={Table} />
-                            <Route path="/chart" component={Chart} />
-                            <Route path="/list" component={List} />
+                            <Route exact path="/" component={HomeComponent || Loading} />
+
+                            {this.state.tabs && this.state.tabs.map(tab => {
+                                const Component = asyncComponent(() => import('./' + tab.path).then(module => module.default))
+                                return <Route path={'/' + tab.id} component={Component} />;
+                            })}
+                            
                             <Route component={NotFound} />
                         </Switch>
                     </section>
                 </div>
-            </Router>
-
-        {tabs.map(tab =>
-          <div key={tab.id}>
-            <a href={tab.path}>{tab.id} {tab.title} {tab.order}</a>
-          </div>
-        )}
-      </div>
+            </BrowserRouter>
     );
   }
 }
