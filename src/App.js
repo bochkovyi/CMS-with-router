@@ -73,6 +73,11 @@ class App extends Component {
                         <Route component={NotFound} />
                     </Switch>
                 </div>
+                <footer>
+                  <p>Made by Bogdan Bochkovvyi.</p>
+                  <p>Source code can be found <a href="https://github.com/bochkovyi/CMS-with-router" target="blank" rel="nofollow noopener">here</a>.</p>
+                  <p>Based on <a href="https://getbootstrap.com" target="blank" rel="nofollow noopener">Bootstrap</a>. Web fonts from <a href="https://fonts.google.com/" target="blank" rel="nofollow noopener">Google</a>.</p>
+                </footer>
             </div>
         </BrowserRouter>
     );
