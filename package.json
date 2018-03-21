@@ -2,6 +2,7 @@
   "name": "cms-with-router",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "https://bochkovyi.github.io/projects/cms-with-router",
   "dependencies": {
     "react": "^16.2.0",
     "react-async-component": "^1.0.2",

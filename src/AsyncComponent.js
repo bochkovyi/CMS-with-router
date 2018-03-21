@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 
 /**
+ * This component in NOT used.
  * AsyncComponent code taken from here:
  * https://scotch.io/tutorials/lazy-loading-routes-in-react
  * 
  * Left here for reference.
  * Currently this solution is used:
  * https://medium.com/@AkyunaAkish/understanding-react-router-4-df73a66d96c4
- * (https://www.npmjs.com/package/react-async-component)
+ * https://www.npmjs.com/package/react-async-component
  * 
  * It seems to be more reliable, even though chuncks got bigger (+ around 1,7 KB in total)
  * 

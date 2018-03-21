@@ -1,33 +1,28 @@
-/**
- * 
- * Общие требования:
- * При навигации между закладками, текущая закладка должна находить отображение в url приложения.
- * Например 'localhost/dummyTable' или 'localhost/dummyChart'
- * По умолчанию должна открыться первая закладка.
- *  Если в момент старта приложения, в url указана конкретная закладка необходимо сразу ее открыть.
- * Файл модуль закладки должен быть подгружен только когда необходим
- */
+import React from 'react'
 
- // https://scotch.io/tutorials/lazy-loading-routes-in-react
-
- import React, { Component } from 'react'
- 
- class List extends Component {
-     render () {
-         return (
-             <div className="container">
-                 <section className="section">
-                     <div className="container">
-                         <h1 className="title">Lazy Loading</h1>
-                         <h2 className="subtitle">
-                             A simple app to demonstrate how lazy loading routes in React works. List.
-                         </h2>
-                    </div>
-                </section>
-
-            </div>
-        )
-    }
-}
+const List = () => (
+  <React.Fragment>
+    <div className="card text-dark bg-light mb-3">
+      <div className="card-header">Hello there!</div>
+      <div className="card-body">
+        <h4 className="card-title">Do you want to see a really awesome list?</h4>
+        <p className="card-text">And you have one! A list of my apps.
+          <br/><br/><a className="btn btn-primary" href="https://github.com/bochkovyi" target="blank" rel="noopener">Check out my github!</a>
+        </p>
+      </div>
+    </div>
+    <ul className="list-group">
+        <li className="list-group-item d-flex justify-content-between align-items-center">
+        <a href="https://bochkovyi.github.io/projects/currency-app/" target="blank" rel="noopener">Buy and sell Bitcoins with Angular</a>
+        </li>
+        <li className="list-group-item d-flex justify-content-between align-items-center">
+        <a href="https://bochkovyi.github.io/projects/partywise/" target="blank" rel="noopener">Vote with Angular</a>
+        </li>
+        <li className="list-group-item d-flex justify-content-between align-items-center">
+            <a href="https://bochkovyi.github.io/projects/orchid/" target="blank" rel="noopener">Orchid Camp at Kinburn Spit</a>
+        </li>
+    </ul>
+  </React.Fragment>
+)
 
 export default List;
