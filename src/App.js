@@ -64,10 +64,10 @@ class App extends Component {
                 <Nav tabs={tabs}/>
                 <div className="container">
                     <Switch>
-                        <Route exact path="/" component={DefaultComponent} />
+                        <Route exact path={`${process.env.PUBLIC_URL}/`} component={DefaultComponent} />
 
                         {lazyComponents.map(
-                            lazy => <Route key={lazy.tab.id} path={'/' + lazy.tab.id} component={lazy.component} />
+                            lazy => <Route key={lazy.tab.id} path={`${process.env.PUBLIC_URL}/${lazy.tab.id}`} component={lazy.component} />
                         )}
                         
                         <Route component={NotFound} />
