@@ -7,7 +7,7 @@ import Nav from './Nav/Nav';
 import { asyncComponent } from 'react-async-component';
 import NotFound from './NotFound/NotFound';
 
-const API = '/tabs.json';
+const API = `${process.env.PUBLIC_URL}/tabs.json`;
 const SORTING_FUNCTION = (tabA, tabB) => tabA.order - tabB.order;
 
 const Loading = () => <p>Loading ...</p>;
